@@ -1,22 +1,13 @@
 import random
-import string
-import concurrent.futures
-
-# define a function to generate a random filename
-def generate_filename():
-    letters = string.ascii_lowercase
-    return ''.join(random.choice(letters) for _ in range(10)) + '.txt'
-
-# define a function to save a file with a random number
-def save_file(filename):
-    with open(filename, 'w') as f:
-        num = random.randint(1, 1000)
-        f.write(str(num))
-
-# create a thread pool with 5 services
-with concurrent.futures.ThreadPoolExecutor(max_workers=5) as executor:
-    # submit a task to each service
-    for i in range(5):
-        filename = generate_filename()
-        executor.submit(save_file, filename)
-        print(f'Submitted task to save {filename}')
+from concurrent.futures import ThreadPoolExecutor
+try:
+    filenames = ['file1.txt', 'file2.txt', 'file3.txt','file4.txt','file5.txt'] 
+    for filename in filenames: 
+        with open(filename, 'w') as file: 
+            num = random.randint(1, 1000)
+            file.write(str(num))
+except:
+    print("there is an issue with the file",e)
+with ThreadPoolExecutor(max_workers=5) as executor:
+    for result in executor.map(filenames):
+        print(format(result))
